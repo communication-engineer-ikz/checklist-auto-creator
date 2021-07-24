@@ -1,3 +1,10 @@
+function onOpen() {
+    const ui = SpreadsheetApp.getUi();
+    const menu = ui.createMenu("追加メニュー");
+    menu.addItem("シート整形", "checklistAutoCreator");
+    menu.addToUi();
+}
+
 function checklistAutoCreator() {
     const spreadSheet = SpreadsheetApp.getActiveSpreadsheet();
     const sheet = spreadSheet.getActiveSheet();
