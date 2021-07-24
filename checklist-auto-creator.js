@@ -1,6 +1,6 @@
 function checklistAutoCreator() {
     const spreadSheet = SpreadsheetApp.getActiveSpreadsheet();
-    const sheet = spreadSheet.getSheetByName("202106 のコピー");
+    const sheet = spreadSheet.getActiveSheet();
     const lastRow = sheet.getLastRow();
     const maxRow = sheet.getMaxRows();
     const lastColumn = sheet.getLastColumn();
