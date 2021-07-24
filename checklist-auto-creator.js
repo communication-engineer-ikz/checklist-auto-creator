@@ -33,4 +33,10 @@ function checklistAutoCreator() {
     } else {
         targetRange.applyRowBanding(SpreadsheetApp.BandingTheme.GREEN);
     }
+
+/* 参考
+    https://caymezon.com/gas-checkbox/#toc3
+*/
+      const checkboxColmunsRange = sheet.getRange(1, 7, lastRow);
+      checkboxColmunsRange.insertCheckboxes();
 }
