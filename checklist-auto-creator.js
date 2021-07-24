@@ -21,9 +21,9 @@ function checklistAutoCreator() {
         sheet.deleteColumns(lastColumn + 1, maxColumn - lastColumn - 1); //チェックボックスを追加する列の確保
     }
 
-/* 参考
-    https://qiita.com/yamaotoko4177/items/4474217c18cc864bcc62
-*/
+    /* 参考
+        https://qiita.com/yamaotoko4177/items/4474217c18cc864bcc62
+    */
     const targetRange = sheet.getRange(1, 1, lastRow, lastRow + 1);
 
     if (targetRange.getBandings()[0] != null) {
@@ -32,9 +32,9 @@ function checklistAutoCreator() {
         targetRange.applyRowBanding(SpreadsheetApp.BandingTheme.GREEN);
     }
 
-/* 参考
-    https://caymezon.com/gas-checkbox/#toc3
-*/
-      const checkboxColmunsRange = sheet.getRange(1, 7, lastRow);
-      checkboxColmunsRange.insertCheckboxes();
+    /* 参考
+        https://caymezon.com/gas-checkbox/#toc3
+    */
+    const checkboxColmunsRange = sheet.getRange(1, 7, lastRow);
+    checkboxColmunsRange.insertCheckboxes();
 }
