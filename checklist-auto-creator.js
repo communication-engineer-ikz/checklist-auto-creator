@@ -9,13 +9,15 @@ function checklistAutoCreator() {
     const spreadSheet = SpreadsheetApp.getActiveSpreadsheet();
     const activeSheet = spreadSheet.getActiveSheet();
 
-    uploadCsvFileData(spreadSheet);
+    const csvFilesFolderId = getCsvFilesFolderId();
+
+    uploadCsvFileDataFromGDriveFolder(spreadSheet, csvFilesFolderId);
     deleteExtraCells(activeSheet);
     applyBandingThemeOfGreen(activeSheet);
     addCheckboxOnRowOfH(activeSheet);
 }
 
-function uploadCsvFileData(spreadSheet) {
+function uploadCsvFileDataFromGDriveFolder(spreadSheet, csvFilesFolderId) {
 
     const sheets = spreadSheet.getSheets();
 
@@ -29,7 +31,6 @@ function uploadCsvFileData(spreadSheet) {
     /* 参考
         https://moripro.net/gas-drive-get-filename/
     */
-    const csvFilesFolderId = getCsvFilesFolderId();
     const files = DriveApp.getFolderById(csvFilesFolderId).getFiles();
 
     const templateSheet = spreadSheet.getSheetByName("template"); //非表示のシート
