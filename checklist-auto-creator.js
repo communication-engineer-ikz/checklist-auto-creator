@@ -86,5 +86,5 @@ function findCsvFileNotYetImported(sheets) {
         }
     }
 
-    return csvFileListNotYetImported;
+    return csvFileListNotYetImported.sort();
 }
