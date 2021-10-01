@@ -9,6 +9,14 @@ function checklistAutoCreator() {
     const spreadSheet = SpreadsheetApp.getActiveSpreadsheet();
     const activeSheet = spreadSheet.getActiveSheet();
 
+    uploadCsvFileData(spreadSheet);
+    deleteExtraCells(activeSheet);
+    applyBandingThemeOfGreen(activeSheet);
+    addCheckboxOnRowOfH(activeSheet);
+}
+
+function uploadCsvFileData(spreadSheet) {
+
     const sheets = spreadSheet.getSheets();
 
     const cardDetailsSheetList = [];
@@ -41,10 +49,6 @@ function checklistAutoCreator() {
             newSheet.getRange(1, 1, csvData.length, csvData[1].length).setValues(csvData);
         }
     }
-
-    deleteExtraCells(activeSheet);
-    applyBandingThemeOfGreen(activeSheet);
-    addCheckboxOnRowOfH(activeSheet);
 }
 
 function deleteExtraCells(sheet) {
