@@ -36,7 +36,7 @@ function checklistAutoCreator() {
             /** 参考
                  * https://qiita.com/chihirot0109/items/d78ec1a6d14783545c32
              */
-            let newSheet = spreadSheet.insertSheet(filename, sheets.length + 1, {template: templateSheet}).showSheet();
+            let newSheet = spreadSheet.insertSheet(filename, sheets.length + 1, {template: templateSheet}).showSheet(); //複数のシートを追加したときにはシート順はソートされない
             let csvData = Utilities.parseCsv(file.getBlob().getDataAsString());
             newSheet.getRange(1, 1, csvData.length, csvData[1].length).setValues(csvData);
         }
