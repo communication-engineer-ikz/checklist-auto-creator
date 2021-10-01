@@ -44,7 +44,7 @@ function uploadCsvFileDataFromGDriveFolder(spreadSheet, csvFilesFolderId) {
                  * https://qiita.com/chihirot0109/items/d78ec1a6d14783545c32
              */
             const newSheet = spreadSheet.insertSheet(filename, sheets.length + 1, {template: templateSheet}).showSheet(); //複数のシートを追加したときにはシート順はソートされない
-            const csvData = Utilities.parseCsv(file.getBlob().getDataAsString());
+            const csvData = Utilities.parseCsv(file.getBlob().getDataAsString("sjis"));
             newSheet.getRange(1, 1, csvData.length, csvData[1].length).setValues(csvData);
         }
     }
