@@ -19,11 +19,12 @@ function checklistAutoCreator() {
 
 function uploadCsvFileDataFromGDriveFolder(spreadSheet, csvFilesFolderId) {
 
+    const templateSheet = spreadSheet.getSheetByName("template"); //非表示のシート
+
     const sheets = spreadSheet.getSheets();
+    if (sheets.length == 0) return;
 
     const cardDetailsSheetList = [];
-
-    if (sheets.length == 0) return;
     for (const sheet of sheets) {
         cardDetailsSheetList.push(sheet.getName());
     }
@@ -32,9 +33,6 @@ function uploadCsvFileDataFromGDriveFolder(spreadSheet, csvFilesFolderId) {
         https://moripro.net/gas-drive-get-filename/
     */
     const files = DriveApp.getFolderById(csvFilesFolderId).getFiles();
-
-    const templateSheet = spreadSheet.getSheetByName("template"); //非表示のシート
-    
     while (files.hasNext()) {
         
         const file = files.next();
@@ -45,8 +43,8 @@ function uploadCsvFileDataFromGDriveFolder(spreadSheet, csvFilesFolderId) {
             /** 参考
                  * https://qiita.com/chihirot0109/items/d78ec1a6d14783545c32
              */
-            let newSheet = spreadSheet.insertSheet(filename, sheets.length + 1, {template: templateSheet}).showSheet(); //複数のシートを追加したときにはシート順はソートされない
-            let csvData = Utilities.parseCsv(file.getBlob().getDataAsString());
+            const newSheet = spreadSheet.insertSheet(filename, sheets.length + 1, {template: templateSheet}).showSheet(); //複数のシートを追加したときにはシート順はソートされない
+            const csvData = Utilities.parseCsv(file.getBlob().getDataAsString());
             newSheet.getRange(1, 1, csvData.length, csvData[1].length).setValues(csvData);
         }
     }
