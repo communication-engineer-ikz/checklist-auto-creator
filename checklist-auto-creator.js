@@ -1,40 +1,55 @@
 function onOpen() {
     const ui = SpreadsheetApp.getUi();
-    const menu = ui.createMenu("追加メニュー");
-    menu.addItem("シート整形", "checklistAutoCreator");
+    const menu = ui.createMenu("CheckList AutoCreator");
+    menu.addItem("CSV取込", "checklistAutoCreator");
+    menu.addItem("Repository Info.", "displayRepositoryInfo");
     menu.addToUi();
 }
 
 function checklistAutoCreator() {
     const spreadSheet = SpreadsheetApp.getActiveSpreadsheet();
-    const sheet = spreadSheet.getActiveSheet();
-    const lastRow = sheet.getLastRow();
-    const maxRow = sheet.getMaxRows();
-    const lastColumn = sheet.getLastColumn();
-    const maxColumn = sheet.getMaxColumns();
+    const activeSheet = spreadSheet.getActiveSheet();
 
-    if (maxRow - lastRow > 0) {
-        sheet.deleteRows(lastRow + 1, maxRow - lastRow);
-    }
+    const csvFilesFolderId = getCsvFilesFolderId();
 
-    if (maxColumn - lastColumn - 1 > 0) {
-        sheet.deleteColumns(lastColumn + 1, maxColumn - lastColumn - 1); //チェックボックスを追加する列の確保
-    }
+    uploadCsvFileDataFromGDriveFolder(spreadSheet, csvFilesFolderId);
+}
 
-    /* 参考
-        https://qiita.com/yamaotoko4177/items/4474217c18cc864bcc62
-    */
-    const targetRange = sheet.getRange(1, 1, lastRow, lastRow + 1);
+function uploadCsvFileDataFromGDriveFolder(spreadSheet, csvFilesFolderId) {
 
-    if (targetRange.getBandings()[0] != null) {
-        console.log("交互の背景色は適用できません");
-    } else {
-        targetRange.applyRowBanding(SpreadsheetApp.BandingTheme.GREEN);
+    const templateSheet = spreadSheet.getSheetByName("template"); //非表示のシート
+
+    const sheets = spreadSheet.getSheets();
+    if (sheets.length == 0) return;
+
+    const cardDetailsSheetList = [];
+    for (const sheet of sheets) {
+        cardDetailsSheetList.push(sheet.getName());
     }
 
     /* 参考
-        https://caymezon.com/gas-checkbox/#toc3
+        https://moripro.net/gas-drive-get-filename/
     */
-    const checkboxColmunsRange = sheet.getRange(1, 7, lastRow);
-    checkboxColmunsRange.insertCheckboxes();
+    const files = DriveApp.getFolderById(csvFilesFolderId).getFiles();
+    while (files.hasNext()) {
+        
+        const file = files.next();
+        const filename = file.getName().replace(".csv", "");
+        console.log(filename);
+
+        if (!cardDetailsSheetList.includes(filename)) {
+            /** 参考
+                 * https://qiita.com/chihirot0109/items/d78ec1a6d14783545c32
+             */
+            const newSheet = spreadSheet.insertSheet(filename, sheets.length + 1, {template: templateSheet}).showSheet(); //複数のシートを追加したときにはシート順はソートされない
+            const csvData = Utilities.parseCsv(file.getBlob().getDataAsString("sjis"));
+            newSheet.getRange(1, 1, csvData.length, csvData[1].length).setValues(csvData);
+        }
+    }
+}
+
+function displayRepositoryInfo() {
+    return Browser.msgBox("Repository Info.",
+        "communication-engineer-ikz / checklist-auto-creator" + "\\n" + "https://github.com/communication-engineer-ikz/checklist-auto-creator",
+        Browser.Buttons.OK);
 }
