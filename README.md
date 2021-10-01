@@ -3,7 +3,7 @@
 参照フォルダに追加された明細CSV データをGSS へ追加し、チェックリストを作成する。
 
 ## GSS
-https://docs.google.com/spreadsheets/d/180Uk7DzVPXYyxwF8BwCTaQqZh_Qrs__CzJCo66xjAHY/edit#gid=40160077
+https://docs.google.com/spreadsheets/d/180Uk7DzVPXYyxwF8BwCTaQqZh_Qrs__CzJCo66xjAHY
 
 ### 参照フォルダ
 https://drive.google.com/drive/u/0/folders/1M80EiKjFK-hANkOcru1BNGPZz6uUJUFf
