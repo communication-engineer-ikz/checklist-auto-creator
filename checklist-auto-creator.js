@@ -1,7 +1,7 @@
 function onOpen() {
     const ui = SpreadsheetApp.getUi();
-    const menu = ui.createMenu("追加メニュー");
-    menu.addItem("シート整形", "checklistAutoCreator");
+    const menu = ui.createMenu("Check List Auto Creator");
+    menu.addItem("シート追加", "checklistAutoCreator");
     menu.addToUi();
 }
 
