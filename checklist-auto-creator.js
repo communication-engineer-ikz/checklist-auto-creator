@@ -15,7 +15,7 @@ function checklistAutoCreator() {
 
     //CSV ファイルの値をGSS へコピー
         findCsvFileNotYetImported(spreadSheet);
-
+    
         //CSV ファイル取り込み
         //GSS へ転記
 
@@ -50,25 +50,30 @@ function checklistAutoCreator() {
 
 function findCsvFileNotYetImported(spreadSheet) {
 
+    const cardDetailsSheetList = [];
     const csvFileListNotYetImported = [];
 
     const sheets = spreadSheet.getSheets();
+
     if (sheets.length == 0) return;
+    for (const sheet of sheets) {
+        cardDetailsSheetList.push(sheet.getName());
+    }
 
     /* 参考
         https://moripro.net/gas-drive-get-filename/
     */
     const csvFilesFolderId = getCsvFilesFolderId();
     const files = DriveApp.getFolderById(csvFilesFolderId).getFiles();
-
+    
     while (files.hasNext()) {
-
+        
         const file = files.next();
-        const filename = file.getName();
+        const filename = file.getName().replace(".csv", "");
         console.log(filename);
 
-        if (!files.includes(filename)) {
-            csvFileListNotYetImported.add(filename);
+        if (!cardDetailsSheetList.includes(filename)) {
+            csvFileListNotYetImported.push(filename);
         }
     }
 
