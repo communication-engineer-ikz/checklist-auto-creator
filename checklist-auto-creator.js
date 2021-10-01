@@ -43,44 +43,44 @@ function checklistAutoCreator() {
     }
 
 
-    // //CSV ファイルの値をGSS へコピー
-    //     addSheetForCsvFileNotYetImported(spreadSheet);
+    //CSV ファイルの値をGSS へコピー
+        addSheetForCsvFileNotYetImported(spreadSheet);
 
-    //     //CSV ファイル取り込み
-    //     //GSS へ転記
+        //CSV ファイル取り込み
+        //GSS へ転記
 
-    // //余分なセルの削除
-    // const lastRow = activeSheet.getLastRow();
-    // const maxRow = activeSheet.getMaxRows();
-    // const lastColumn = activeSheet.getLastColumn();
-    // const maxColumn = activeSheet.getMaxColumns();
+    //余分なセルの削除
+    const lastRow = activeSheet.getLastRow();
+    const maxRow = activeSheet.getMaxRows();
+    const lastColumn = activeSheet.getLastColumn();
+    const maxColumn = activeSheet.getMaxColumns();
 
-    // if (maxRow - lastRow > 0) {
-    //     activeSheet.deleteRows(lastRow + 1, maxRow - lastRow);
-    // }
+    if (maxRow - lastRow > 0) {
+        activeSheet.deleteRows(lastRow + 1, maxRow - lastRow);
+    }
 
-    // if (maxColumn - lastColumn - 1 > 0) {
-    //     activeSheet.deleteColumns(lastColumn + 1, maxColumn - lastColumn - 1); //チェックボックスを追加する列の確保
-    // }
+    if (maxColumn - lastColumn - 1 > 0) {
+        activeSheet.deleteColumns(lastColumn + 1, maxColumn - lastColumn - 1); //チェックボックスを追加する列の確保
+    }
 
-    // //交互の背景色の適用
-    // /* 参考
-    //     https://qiita.com/yamaotoko4177/items/4474217c18cc864bcc62
-    // */
-    // const targetRange = activeSheet.getRange(1, 1, lastRow, lastRow + 1);
+    //交互の背景色の適用
+    /* 参考
+        https://qiita.com/yamaotoko4177/items/4474217c18cc864bcc62
+    */
+    const targetRange = activeSheet.getRange(1, 1, lastRow, lastRow + 1);
 
-    // if (targetRange.getBandings()[0] != null) {
-    //     console.log("交互の背景色は適用できません");
-    // } else {
-    //     targetRange.applyRowBanding(SpreadsheetApp.BandingTheme.GREEN);
-    // }
+    if (targetRange.getBandings()[0] != null) {
+        console.log("交互の背景色は適用できません");
+    } else {
+        targetRange.applyRowBanding(SpreadsheetApp.BandingTheme.GREEN);
+    }
 
-    // //一番右の列にチェックボックスを追加する
-    // /* 参考
-    //     https://caymezon.com/gas-checkbox/#toc3
-    // */
-    // const checkboxColmunsRange = activeSheet.getRange(1, 7, lastRow);
-    // checkboxColmunsRange.insertCheckboxes();
+    //一番右の列にチェックボックスを追加する
+    /* 参考
+        https://caymezon.com/gas-checkbox/#toc3
+    */
+    const checkboxColmunsRange = activeSheet.getRange(1, 7, lastRow);
+    checkboxColmunsRange.insertCheckboxes();
 }
 
 function addSheetForCsvFileNotYetImported(spreadSheet) {
