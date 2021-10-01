@@ -42,57 +42,9 @@ function checklistAutoCreator() {
         }
     }
 
-
-    //CSV ファイルの値をGSS へコピー
-        addSheetForCsvFileNotYetImported(spreadSheet);
-
-        //CSV ファイル取り込み
-        //GSS へ転記
-
     deleteExtraCells(activeSheet);
     applyBandingThemeOfGreen(activeSheet);
     addCheckboxOnRowOfH(activeSheet);
-}
-
-function addSheetForCsvFileNotYetImported(spreadSheet) {
-
-    const sheets = spreadSheet.getSheets();
-    const templateSheet = spreadSheet.getSheetByName("template"); //非表示のシート
-    const csvFileListNotYetImported = findCsvFileNotYetImported(sheets);
-
-    for (i = 0; i < csvFileListNotYetImported.length ; i++) {
-        spreadSheet.insertSheet(csvFileListNotYetImported[i], sheets.length + i, {template: templateSheet}).showSheet();
-    }
-}
-
-function findCsvFileNotYetImported(sheets) {
-
-    const cardDetailsSheetList = [];
-    const csvFileListNotYetImported = [];
-
-    if (sheets.length == 0) return;
-    for (const sheet of sheets) {
-        cardDetailsSheetList.push(sheet.getName());
-    }
-
-    /* 参考
-        https://moripro.net/gas-drive-get-filename/
-    */
-    const csvFilesFolderId = getCsvFilesFolderId();
-    const files = DriveApp.getFolderById(csvFilesFolderId).getFiles();
-    
-    while (files.hasNext()) {
-        
-        const file = files.next();
-        const filename = file.getName().replace(".csv", "");
-        console.log(filename);
-
-        if (!cardDetailsSheetList.includes(filename)) {
-            csvFileListNotYetImported.push(filename);
-        }
-    }
-
-    return csvFileListNotYetImported.sort();
 }
 
 function deleteExtraCells(sheet) {
