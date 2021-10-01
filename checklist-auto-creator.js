@@ -77,5 +77,5 @@ function findCsvFileNotYetImported(spreadSheet) {
         }
     }
 
-    console.log(csvFileListNotYetImported);
+    return csvFileListNotYetImported;
 }
