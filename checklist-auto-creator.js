@@ -51,11 +51,11 @@ function checklistAutoCreator() {
 function addSheetForCsvFileNotYetImported(spreadSheet) {
 
     const sheets = spreadSheet.getSheets();
+    const templateSheet = spreadSheet.getSheetByName("template"); //非表示のシート
     const csvFileListNotYetImported = findCsvFileNotYetImported(sheets);
 
     for (i = 0; i < csvFileListNotYetImported.length ; i++) {
-        let newSheet = spreadSheet.insertSheet(sheets.length + i);
-        newSheet.setName(csvFileListNotYetImported[i]);
+        spreadSheet.insertSheet(csvFileListNotYetImported[i], sheets.length + i, {template: templateSheet}).showSheet();
     }
 }
 
