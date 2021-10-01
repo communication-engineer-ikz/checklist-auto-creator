@@ -14,8 +14,8 @@ function checklistAutoCreator() {
     const maxColumn = sheet.getMaxColumns();
 
     //CSV ファイルの値をGSS へコピー
-        findCsvFileNotYetImported(spreadSheet);
-    
+        addSheetForCsvFileNotYetImported(spreadSheet);
+
         //CSV ファイル取り込み
         //GSS へ転記
 
@@ -48,12 +48,21 @@ function checklistAutoCreator() {
     checkboxColmunsRange.insertCheckboxes();
 }
 
-function findCsvFileNotYetImported(spreadSheet) {
+function addSheetForCsvFileNotYetImported(spreadSheet) {
+
+    const sheets = spreadSheet.getSheets();
+    const csvFileListNotYetImported = findCsvFileNotYetImported(sheets);
+
+    for (i = 0; i < csvFileListNotYetImported.length ; i++) {
+        let newSheet = spreadSheet.insertSheet(sheets.length + i);
+        newSheet.setName(csvFileListNotYetImported[i]);
+    }
+}
+
+function findCsvFileNotYetImported(sheets) {
 
     const cardDetailsSheetList = [];
     const csvFileListNotYetImported = [];
-
-    const sheets = spreadSheet.getSheets();
 
     if (sheets.length == 0) return;
     for (const sheet of sheets) {
