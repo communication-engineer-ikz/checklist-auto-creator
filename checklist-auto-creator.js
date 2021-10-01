@@ -14,7 +14,8 @@ function checklistAutoCreator() {
     const maxColumn = sheet.getMaxColumns();
 
     //CSV ファイルの値をGSS へコピー
-        //まだ取り込んでいないCSV ファイルを見つける
+        findCsvFileNotYetImported(spreadSheet);
+
         //CSV ファイル取り込み
         //GSS へ転記
 
@@ -45,4 +46,31 @@ function checklistAutoCreator() {
     */
     const checkboxColmunsRange = sheet.getRange(1, 7, lastRow);
     checkboxColmunsRange.insertCheckboxes();
+}
+
+function findCsvFileNotYetImported(spreadSheet) {
+
+    const csvFileListNotYetImported = [];
+
+    const sheets = spreadSheet.getSheets();
+    if (sheets.length == 0) return;
+
+    /* 参考
+        https://moripro.net/gas-drive-get-filename/
+    */
+    const csvFilesFolderId = getCsvFilesFolderId();
+    const files = DriveApp.getFolderById(csvFilesFolderId).getFiles();
+
+    while (files.hasNext()) {
+
+        const file = files.next();
+        const filename = file.getName();
+        console.log(filename);
+
+        if (!files.includes(filename)) {
+            csvFileListNotYetImported.add(filename);
+        }
+    }
+
+    console.log(csvFileListNotYetImported);
 }
