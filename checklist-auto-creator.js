@@ -1,7 +1,8 @@
 function onOpen() {
     const ui = SpreadsheetApp.getUi();
-    const menu = ui.createMenu("Check List Auto Creator");
-    menu.addItem("シート追加", "checklistAutoCreator");
+    const menu = ui.createMenu("CheckList AutoCreator");
+    menu.addItem("CSV取込", "checklistAutoCreator");
+    menu.addItem("Repository Info.", "displayRepositoryInfo");
     menu.addToUi();
 }
 
@@ -45,4 +46,10 @@ function uploadCsvFileDataFromGDriveFolder(spreadSheet, csvFilesFolderId) {
             newSheet.getRange(1, 1, csvData.length, csvData[1].length).setValues(csvData);
         }
     }
+}
+
+function displayRepositoryInfo() {
+    return Browser.msgBox("Repository Info.",
+        "communication-engineer-ikz / checklist-auto-creator" + "\\n" + "https://github.com/communication-engineer-ikz/checklist-auto-creator",
+        Browser.Buttons.OK);
 }
